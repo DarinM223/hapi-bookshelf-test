@@ -10,7 +10,7 @@ var User = require('../models/user.js')
  */
 UserController.getUsers = function(request, reply) {
   User.fetchAll().then(function(users) {
-    reply(JSON.stringify(users));
+    reply(users);
   }).catch(function(e) {
     reply(Boom.wrap(e, 500));
   });
@@ -28,7 +28,7 @@ UserController.addUser = function(request, reply) {
     created_at: new Date(),
     updated_at: new Date()
   }).save().then(function(user) {
-    reply(JSON.stringify(user));
+    reply(user);
   }).catch(function(e) {
     reply(Boom.wrap(e, 500));
   });
@@ -40,7 +40,7 @@ UserController.addUser = function(request, reply) {
  */
 UserController.getUser = function(request, reply) {
   new User({ id: request.params.id }).fetch().then(function(user) {
-    reply(JSON.stringify(user));
+    reply(user);
   }).catch(function(e) {
     reply(Boom.wrap(e, 500));
   });
