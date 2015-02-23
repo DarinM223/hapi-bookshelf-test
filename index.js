@@ -7,6 +7,15 @@ var User = require('./controllers/user.js');
 
 server.connection({ host: '127.0.0.1', port: 3000 });
 
+server.views({
+  engines: {
+    html: require('handlebars')
+  },
+  path: './views',
+  layoutPath: './views/layout',
+  helpersPath: './views/helpers'
+});
+
 server.route({
   method: 'GET',
   path: '/api/users',
@@ -29,7 +38,7 @@ server.route({
   method: 'GET',
   path: '/',
   handler: function(request, reply) {
-    reply('Hello, world!');
+    reply.view('index', { title: 'Hello, title!', body: 'Hello, body!' });
   }
 });
 
