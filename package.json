@@ -1,13 +1,13 @@
 {
-  "name": "todolist",
+  "name": "HAPI Bookshelf test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Darin Minamoto",
+  "license": "MIT",
   "dependencies": {
     "asyncawait": "^0.7.4",
     "bcrypt": "^0.8.1",
