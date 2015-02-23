@@ -1,11 +1,10 @@
 'use strict';
+var User = require('../models/user.js');
 
 exports.seed = function(knex, Promise) {
-  return knex('users').insert({
+  return new User({
     username: 'darin',
     email: 'darin@test.net',
-    password: 'blah',
-    created_at: new Date(),
-    updated_at: new Date()
-  });
+    password: 'blah'
+  }).save();
 };

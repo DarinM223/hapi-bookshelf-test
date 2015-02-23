@@ -24,9 +24,7 @@ UserController.addUser = function(request, reply) {
   new User({
     username: request.payload.username,
     email: request.payload.email,
-    password: request.payload.password,
-    created_at: new Date(),
-    updated_at: new Date()
+    password: request.payload.password
   }).save().then(function(user) {
     reply(user);
   }).catch(function(e) {

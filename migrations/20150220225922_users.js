@@ -5,7 +5,8 @@ exports.up = function(knex, Promise) {
     t.increments().primary();
     t.string('username').notNull();
     t.string('email').notNull();
-    t.string('password').notNull();
+    t.boolean('hashed_password').notNull().defaultTo(false);
+    t.string('password').nullable(); 
     t.dateTime('created_at').notNull();
     t.dateTime('updated_at').nullable();
   });
