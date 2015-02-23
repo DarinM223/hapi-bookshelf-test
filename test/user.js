@@ -35,6 +35,8 @@ describe('Testing user model', function() {
     it('should have hashed_password set to true', function(done) {
       new User({ id: userid }).fetch().then(function(user) {
         user.attributes.hashed_password.should.equal(1);
+        (user.attributes.created_at !== null).should.be.true;
+        (user.attributes.updated_at === null).should.be.true;
         done();
       });
     });
@@ -44,6 +46,43 @@ describe('Testing user model', function() {
         return encryption.comparePassword('foo', user.attributes.password);
       }).then(function(result) {
         result.should.equal(true);
+        done();
+      });
+    });
+  });
+
+  describe('Testing updating user model', function() {
+    var userid = null;
+
+    before(function(done) {
+      new User({
+        username: 'newuser',
+        email: 'newuser@test.com',
+        password: 'foo'
+      }).save().then(function(user) {
+        userid = user.id;
+        return user.save({ email: 'blah@test.com' });
+      }).then(function(user) {
+        user.attributes.email.should.equal('blah@test.com');
+        done();
+      }).catch(function(e) {
+        console.log('Cannot create test user');
+      });
+    });
+
+    after(function(done) {
+      new User({ id: userid }).fetch().then(function(user) {
+        return user.destroy();
+      }).then(function() {
+        done();
+      }).catch(function(e) {
+        console.log('Cannot destroy test user');
+      });
+    });
+
+    it('should set the updated date', function(done) {
+      new User({ id: userid }).fetch().then(function(user) {
+        (user.attributes.updated_at !== null).should.be.true;
         done();
       });
     });

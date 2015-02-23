@@ -5,16 +5,19 @@ var encryption = require('../encryption.js');
 
 var User = bookshelf.Model.extend({
   tableName: 'users',
+  defaults: {
+    hashed_password: false,
+    created_at: new Date()
+  },
   initialize: function() {
     this.on('saving', this.hashPassword, this);
   },
   hashPassword: function() {
     var that = this;
-    if (typeof(this.get('hashed_password')) === 'undefined' || this.get('hashed_password') === false) { // new user
+    if (this.get('hashed_password') === false) { // new user
       // replace password to hashed password before saving
       return encryption.cryptPassword(this.get('password')).then(function(hash) {
         that.set('password', hash);
-        that.set('created_at', new Date());
         that.set('hashed_password', true);
       }).catch(function(e) {
         console.log(e);
