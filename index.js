@@ -36,6 +36,18 @@ server.route({
 
 server.route({
   method: 'GET',
+  path: '/api/users/{id}/todolists',
+  handler: User.getTodolists
+});
+
+server.route({
+  method: 'POST',
+  path: '/api/users/{id}/todolists',
+  handler: User.addTodolist
+});
+
+server.route({
+  method: 'GET',
   path: '/',
   handler: function(request, reply) {
     reply.view('index', { title: 'Hello, title!', body: 'Hello, body!' });

@@ -1,6 +1,7 @@
 'use strict';
 
 var User = require('../models/user.js')
+  , Todolist = require('../models/todolist.js')
   , Boom = require('boom')
   , UserController = {};
 
@@ -41,6 +42,29 @@ UserController.getUser = function(request, reply) {
     reply(user);
   }).catch(function(e) {
     reply(Boom.wrap(e, 500));
+  });
+};
+
+/**
+ * @method GET
+ * @route /api/users/{id}/todolists
+ */
+UserController.getTodolists = function(request, reply) {
+  new Todolist({ userid: 2 }).fetchAll({ withRelated: 'user' }).then(function(todolists) {
+    reply(todolists);
+  });
+};
+
+/**
+ * @method POST
+ * @route /api/users/{id}/todolists
+ */
+UserController.addTodolist = function(request, reply) {
+  new Todolist({
+    name: request.payload.name,
+    userid: request.params.id
+  }).save().then(function(todolist) {
+    reply(todolist);
   });
 };
 

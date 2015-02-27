@@ -1,6 +1,7 @@
 'use strict'; 
 
 var bookshelf = require('../config.js').bookshelf;
+var Todolist = require('./todolist.js');
 var encryption = require('../encryption.js');
 
 var User = bookshelf.Model.extend({
@@ -11,6 +12,9 @@ var User = bookshelf.Model.extend({
   },
   initialize: function() {
     this.on('saving', this.hashPassword, this);
+  },
+  todolists: function() {
+    return this.hasMany('Todolist', 'userid');
   },
   hashPassword: function() {
     var that = this;
@@ -29,4 +33,4 @@ var User = bookshelf.Model.extend({
   }
 });
 
-module.exports = User;
+module.exports = bookshelf.model('User', User);
